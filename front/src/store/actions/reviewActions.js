@@ -5,7 +5,7 @@ export const fetchReviewsSuccess = reviews => ({type: FETCH_REVIEWS_SUCCESS, rev
 
 export const fetchReviews = id => {
     return async dispatch => {
-        const response = await axiosApi.get('/reviews/' + id);
+        const response = await axiosApi.get('/ratings/' + id);
         dispatch(fetchReviewsSuccess(response.data));
     }
 };
