@@ -9,9 +9,9 @@ const Eatery = (props) => {
     const ReviewInf = {
         eatery: props.match.params.id,
         description: '',
-        serviceScore: '',
-        foodScore: '',
-        interiorScore: ''
+        serviceScore: 1,
+        foodScore: 1,
+        interiorScore: 1
     };
 
     const [review, setReview] = useState(ReviewInf);
@@ -82,7 +82,7 @@ const Eatery = (props) => {
                 </div>
                 <div>
                     <h5 className='text-center mt-3 pb-3'>Add Review</h5>
-                    <form onSubmit={addReview()}>
+                    <form onSubmit={addReview}>
                         <div className="form-group row">
                             <label htmlFor="description" className="col-sm-2 col-form-label">Description</label>
                             <div className="col-sm-10">
@@ -92,36 +92,15 @@ const Eatery = (props) => {
                         <div className="form-group row">
                             <label htmlFor="serviceScore" className="col-sm-2 col-form-label">Service</label>
                             <div className="col-sm-2">
-                                <select className="form-control" id="serviceScore" name='serviceScore' value={review.serviceScore} onChange={Changer}>
-                                    <option value=''> </option>
-                                    <option value='1'>1</option>
-                                    <option value='2'>2</option>
-                                    <option value='3'>3</option>
-                                    <option value='4'>4</option>
-                                    <option value='5'>5</option>
-                                </select>
+                                <input type="number" id="quantity" name="serviceScore" value={review.serviceScore} onChange={Changer} min="1" max="5"/>
                             </div>
                             <label htmlFor="foodScore" className="col-sm-2 col-form-label">Food</label>
                             <div className="col-sm-2">
-                                <select className="form-control" id="foodScore" name='foodScore' value={review.foodScore} onChange={Changer}>
-                                    <option value=''> </option>
-                                    <option value='1'>1</option>
-                                    <option value='2'>2</option>
-                                    <option value='3'>3</option>
-                                    <option value='4'>4</option>
-                                    <option value='5'>5</option>
-                                </select>
+                                <input type="number" id="quantity" name="foodScore" value={review.foodScore} onChange={Changer} min="1" max="5"/>
                             </div>
                             <label htmlFor="interiorScore" className="col-sm-2 col-form-label">Interior</label>
                             <div className="col-sm-2">
-                                <select className="form-control" id="interiorScore" name='interiorScore' value={review.interiorScore} onChange={Changer}>
-                                    <option value=''> </option>
-                                    <option value='1'>1</option>
-                                    <option value='2'>2</option>
-                                    <option value='3'>3</option>
-                                    <option value='4'>4</option>
-                                    <option value='5'>5</option>
-                                </select>
+                                <input type="number" id="quantity" name="interiorScore" value={review.interiorScore} onChange={Changer} min="1" max="5"/>
                             </div>
                         </div>
                         <button type="submit" className="btn btn-success">Add</button>

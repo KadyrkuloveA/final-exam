@@ -12,7 +12,11 @@ export const fetchReviews = id => {
 
 export const addReview = reviewData => {
     return async (dispatch) => {
-        await axiosApi.post('/ratings', reviewData);
+        try {
+            await axiosApi.post('/reviews', reviewData);
+        } catch (e) {
+            console.error(e);
+        }
     };
 };
 
