@@ -29,7 +29,8 @@ const RatingSchema = new Schema({
         enum: [0, 1, 2, 3, 4, 5]
     },
     description: {
-        type: String
+        type: String,
+        required: true
     }
 });
 

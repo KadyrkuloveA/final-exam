@@ -2,7 +2,7 @@ import {FETCH_EATERY_SUCCESS, FETCH_EATERIES_SUCCESS} from "../actions/eateriesA
 
 const initialState = {
     eateries: [],
-    eatery: null
+    eatery: ''
 };
 
 const productsReducer = (state = initialState, action) => {

@@ -8,6 +8,20 @@ const Rating = require('../models/Rating');
 
 const router = express.Router();
 
+router.get('/:id', async (req, res) => {
+    try {
+        const eateryRatings = await Rating.find({eatery: req.params.id}).populate('sender', `username`);
+
+        if (!eateryRatings) {
+            return res.send({message: 'Not found'});
+        }
+
+        res.send(eateryRatings);
+    } catch (e) {
+        res.status(404).send({message: 'Not found'});
+    }
+});
+
 router.post('/', auth, async (req, res) => {
     try {
         const sender = req.user;
@@ -41,10 +55,11 @@ router.post('/', auth, async (req, res) => {
         const overall = (service + food + interior) / 3;
 
         const UpdatedEatery = await Eatery.findById(eatery);
-        UpdatedEatery.rating = overall;
-        UpdatedEatery.service = service;
-        UpdatedEatery.food = food;
-        UpdatedEatery.interior = interior;
+        UpdatedEatery.rating = overall.toFixed(1);
+        UpdatedEatery.service = service.toFixed(1);
+        UpdatedEatery.food = food.toFixed(1);
+        UpdatedEatery.interior = interior.toFixed(1);
+        UpdatedEatery.ratingsAmount = eateryRatings.length;
         await UpdatedEatery.save();
 
         res.send(rating);
@@ -56,7 +71,6 @@ router.post('/', auth, async (req, res) => {
 router.delete('/:id', [auth, permit('admin')], async (req, res) => {
     try{
         const rate = await Rating.findById(req.params.id);
-        console.log(rate.eatery);
         const delRes = await Rating.deleteOne({_id: req.params.id});
 
         const NewEateryRatings = await Rating.find({eatery: rate.eatery});
@@ -71,12 +85,13 @@ router.delete('/:id', [auth, permit('admin')], async (req, res) => {
 
         const overall = (service + food + interior) / 3;
 
-        const UpdatedEatery = await Eatery.findById(rate.eatery);
-        UpdatedEatery.rating = overall;
-        UpdatedEatery.service = service;
-        UpdatedEatery.food = food;
-        UpdatedEatery.interior = interior;
-        await UpdatedEatery.save();
+        const NewUpdatedEatery = await Eatery.findById(rate.eatery);
+        NewUpdatedEatery.rating = overall.toFixed(1);
+        NewUpdatedEatery.service = service.toFixed(1);
+        NewUpdatedEatery.food = food.toFixed(1);
+        NewUpdatedEatery.interior = interior.toFixed(1);
+        NewUpdatedEatery.ratingsAmount = NewEateryRatings.length;
+        await NewUpdatedEatery.save();
 
         if (delRes) {
             return res.send({message: 'Deleted successfully'});

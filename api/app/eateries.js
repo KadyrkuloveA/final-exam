@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const item = await Eatery.findById(req.params.id).populate('user', `username`, `firstName`);
+        const item = await Eatery.findById(req.params.id).populate('user', `username`);
 
         if (!item) {
             return res.status(404).send({message: 'Not found'});

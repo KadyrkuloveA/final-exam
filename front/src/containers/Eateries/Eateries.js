@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {fetchEateries} from "../../store/actions/eateriesActions";
 import {connect} from "react-redux";
 import PostThumbnail from "../../components/UI/PostThumbnail/PostThumbnail";
@@ -26,7 +26,8 @@ const Eateries = props => {
                                 <NavLink className="text-dark" to={'/eateries/' + eatery._id}>{eatery.title}</NavLink>
                             </h5>
                             <p className="card-text">
-
+                                {eatery.rating}/5 ★
+                                ({eatery.ratingsAmount} reviews)
                             </p>
                         </div>
                     </div>

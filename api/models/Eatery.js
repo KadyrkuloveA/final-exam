@@ -24,6 +24,10 @@ const EaterySchema = new Schema({
         type: String,
         default: '0'
     },
+    ratingsAmount: {
+        type: Number,
+        default: 0
+    },
     service: {
         type: String,
         default: '0'
