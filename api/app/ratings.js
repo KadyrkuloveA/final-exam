@@ -53,7 +53,40 @@ router.post('/', auth, async (req, res) => {
     }
 });
 
+router.delete('/:id', [auth, permit('admin')], async (req, res) => {
+    try{
+        const rate = await Rating.findById(req.params.id);
+        console.log(rate.eatery);
+        const delRes = await Rating.deleteOne({_id: req.params.id});
 
+        const NewEateryRatings = await Rating.find({eatery: rate.eatery});
+        const NewEateryServiceScores = NewEateryRatings.map(eatery => eatery.serviceScore);
+        const NewEateryFoodScores = NewEateryRatings.map(eatery => eatery.foodScore);
+        const NewEateryInteriorScores = NewEateryRatings.map(eatery => eatery.interiorScore);
 
+        const reducer = ((accumulator, currentValue) => accumulator + currentValue);
+        const service = NewEateryServiceScores.reduce(reducer) / NewEateryServiceScores.length;
+        const food = NewEateryFoodScores.reduce(reducer) / NewEateryFoodScores.length;
+        const interior = NewEateryInteriorScores.reduce(reducer) / NewEateryInteriorScores.length;
+
+        const overall = (service + food + interior) / 3;
+
+        const UpdatedEatery = await Eatery.findById(rate.eatery);
+        UpdatedEatery.rating = overall;
+        UpdatedEatery.service = service;
+        UpdatedEatery.food = food;
+        UpdatedEatery.interior = interior;
+        await UpdatedEatery.save();
+
+        if (delRes) {
+            return res.send({message: 'Deleted successfully'});
+        } else{
+            return res.status(400).send({error: "Could't delete this rating"});
+        }
+
+    } catch(e){
+        res.status(400).send(e);
+    }
+});
 
 module.exports = router;
