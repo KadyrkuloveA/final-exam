@@ -24,24 +24,6 @@ const run = async () => {
     token: nanoid(),
   });
 
-  await Picture.create({
-    title: 'Girl',
-    user: user1,
-    image: 'fixtures/girl.jpg'
-  }, {
-    title: 'Girl2',
-    user: user1,
-    image: 'fixtures/girl2.png'
-  }, {
-    title: 'Beach',
-    user: user2,
-    image: 'fixtures/beach.jpg'
-  }, {
-    title: 'Motion',
-    user: user2,
-    image: 'fixtures/motion.jpg'
-  });
-
   mongoose.connection.close();
 };
 

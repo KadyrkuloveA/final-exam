@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 
 const config = require('./config');
 const users = require('./app/users');
-const pictures = require('./app/pictures');
+const eateries = require('./app/eateries');
+const ratings = require('./app/ratings');
 
 const app = express();
 const port = 8000;
@@ -17,7 +18,8 @@ const run = async () => {
     await mongoose.connect(config.database, config.databaseOptions);
 
     app.use('/users', users);
-    app.use('/pictures', pictures);
+    app.use('/eateries', eateries);
+    app.use('/ratings', ratings);
 
     app.listen(port, () => {
         console.log(`HTTP Server started on ${port} port!`);

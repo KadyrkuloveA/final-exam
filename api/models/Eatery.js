@@ -32,6 +32,10 @@ const EaterySchema = new Schema({
         type: String,
         default: '0'
     },
+    interior: {
+        type: String,
+        default: '0'
+    }
 });
 
 const Eatery = mongoose.model('Eatery', EaterySchema);
